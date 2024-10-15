@@ -1,41 +1,44 @@
-import tkinter as tk
-from tkinter import messagebox
+import csv
+import os
 
 def register_user():
-    username = entry_username.get()
-    password = entry_password.get()
-    email = entry_email.get()
-
-    if not username or not password or not email:
-        messagebox.showwarning("Input Error", "Please fill in all fields.")
+    username = input("Enter username: ")
+    password = input("Enter password: ")
+    
+    # Check if user already exists
+    if user_exists(username):
+        print("Username already exists. Please choose a different username.")
         return
 
-    # Save the data (in practice, save it securely)
-    with open("users.txt", "a") as file:
-        file.write(f"{username},{password},{email}\n")
+    # Save user to CSV
+    with open('users.csv', mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([username, password])
+    
+    print("User registered successfully!")
 
-    messagebox.showinfo("Success", "Registration successful!")
+def user_exists(username):
+    if not os.path.exists('users.csv'):
+        return False
+    
+    with open('users.csv', mode='r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            if row[0] == username:
+                return True
+    return False
 
-# Create the main window
-root = tk.Tk()
-root.title("Registration Page")
+def main():
+    print("Welcome to the Registration System")
+    while True:
+        action = input("Type 'register' to register a new user or 'exit' to quit: ").strip().lower()
+        if action == 'register':
+            register_user()
+        elif action == 'exit':
+            print("Exiting...")
+            break
+        else:
+            print("Invalid input. Please try again.")
 
-# Create and place labels and entries
-tk.Label(root, text="Username:").grid(row=0, column=0, padx=10, pady=10)
-entry_username = tk.Entry(root)
-entry_username.grid(row=0, column=1, padx=10, pady=10)
-
-tk.Label(root, text="Password:").grid(row=1, column=0, padx=10, pady=10)
-entry_password = tk.Entry(root, show='*')
-entry_password.grid(row=1, column=1, padx=10, pady=10)
-
-tk.Label(root, text="Email:").grid(row=2, column=0, padx=10, pady=10)
-entry_email = tk.Entry(root)
-entry_email.grid(row=2, column=1, padx=10, pady=10)
-
-# Register button
-btn_register = tk.Button(root, text="Register", command=register_user)
-btn_register.grid(row=3, column=0, columnspan=2, pady=20)
-
-# Run the application
-root.mainloop()
+if __name__ == "__main__":
+    main()
