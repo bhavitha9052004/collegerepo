@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<tittle>Registration page </tittle>
+</head>
+<body>
+<form id="rpage">
+<label for="fullname"> Full name </label>
+<input type="text" id="fullname" name="fullname" required><br>
+<label for="email">email: </label>
+<input type="email" id="email" name="email" required><br>
+<label for="password"> password </label>
+<input type="password" id="password" name="password" required><br><br>
+
+<input type="submit" value="register">
+</form>
+<div id="sm" style="display:none;">
+<p>REGISTRATION SUCCESSFULL!</p>
+</div>
+<script>
+document.getElementById("rpage").addEventListener("submit",function(event){
+event.preventDefault();
+document.getElementById("sm").style.display="block";
+document.getElementById("rpage").reset();
+})
+</script>
+</body>
+</html>
