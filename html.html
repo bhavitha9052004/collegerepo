@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title> Login User Page </title>
+</head>
+<body>
+<form id="regForm">
+<label for="fullname">Full Name : </label><br>
+<input type="text" name="fullname" id="fullname" required><br>
+<label for="email">email : </label><br>
+<input type="email" name="email" id="email" required><br>
+<label for="password">password : </label><br>
+<input type="password" name="password" id="password" required><br>
+<br>
+<input type="submit" value="Register">
+</form>
+<div id="sM" style="display:none;">
+<p>Login Successfull!!</p>
+</div>
+<script>
+document.getElementById("regForm").addEventListener("submit",function(event){
+event.preventDefault();
+alert("successfull!!");
+document.getElementById("sMs").style.display="block";
+document.getElementById("regForm").reset();
+});
+</script>
+</body>
+</html>
